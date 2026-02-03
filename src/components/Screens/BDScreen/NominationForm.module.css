@@ -1,0 +1,133 @@
+/* BDScreen Content */
+.container {
+    max-width: 672px;
+    /* 2xl */
+    margin: 0 auto;
+}
+
+.card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #94a3b8;
+    /* slate-400 */
+    text-transform: uppercase;
+}
+
+.input {
+    width: 100%;
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: white;
+    outline: none;
+    font-size: 14px;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+    /* blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.textarea {
+    width: 100%;
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: white;
+    outline: none;
+    font-size: 14px;
+    height: 96px;
+    resize: none;
+    font-family: inherit;
+}
+
+.textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.uploadBox {
+    padding: 16px;
+    border: 1px dashed #475569;
+    border-radius: 8px;
+    background-color: rgba(30, 41, 59, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.uploadBox:hover {
+    background-color: rgba(30, 41, 59, 0.4);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
+}
+
+.submitBtn {
+    background-color: #2563eb;
+    /* blue-600 */
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.submitBtn:hover {
+    background-color: #3b82f6;
+}
+
+.submitBtn:active {
+    transform: scale(0.98);
+}

@@ -1,0 +1,224 @@
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.statCard {
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.statPrimary {
+    background-color: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.statSecondary {
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(51, 65, 85, 1);
+}
+
+.statLabel {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+}
+
+.textIndigo {
+    color: #a5b4fc;
+}
+
+.textSlate {
+    color: #94a3b8;
+}
+
+.statValue {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    margin-top: 4px;
+}
+
+/* Action List */
+.panel {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.panelHeader {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(51, 65, 85, 1);
+    background-color: rgba(30, 41, 59, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panelTitle {
+    font-weight: 600;
+    color: white;
+}
+
+.badgeNew {
+    background-color: #6366f1;
+    color: white;
+    padding: 2px 8px;
+    font-size: 12px;
+    border-radius: 999px;
+}
+
+.panelBody {
+    padding: 8px;
+}
+
+.actionItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.actionItem:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(51, 65, 85, 1);
+}
+
+.itemContent {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.iconBox {
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.iconYellow {
+    background-color: rgba(234, 179, 8, 0.2);
+    color: #eab308;
+}
+
+.iconSlate {
+    background-color: #334155;
+    color: #94a3b8;
+}
+
+.itemTitle {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+.itemDesc {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.actionBtn {
+    width: 100%;
+    padding: 16px;
+    background: #1e293b;
+    color: white;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    margin-top: auto;
+}
+
+.actionItem:hover .actionBtn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.actionBtn:hover {
+    background-color: #4338ca;
+}
+
+/* Price Validation Styles */
+.alertBox {
+    background-color: rgba(234, 179, 8, 0.1);
+    border: 1px solid rgba(234, 179, 8, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.alertContent h3 {
+    color: #fef08a;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.alertContent p {
+    color: rgba(234, 179, 8, 0.8);
+    font-size: 14px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.thead {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.td,
+.th {
+    padding: 16px;
+    text-align: left;
+}
+
+.tr {
+    border-bottom: 1px solid #334155;
+}
+
+.textRed {
+    color: #f87171;
+    font-weight: 700;
+    width: 100px;
+    display: inline-block;
+}
+
+.linkBtn {
+    color: #38bdf8;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.linkBtn:hover {
+    text-decoration: underline;
+    color: #7dd3fc;
+}

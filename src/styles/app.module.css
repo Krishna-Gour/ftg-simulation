@@ -1,0 +1,318 @@
+/* Basic utility classes since we aren't using Tailwind fully, but mimicking some structure for speed in clsx */
+.bg-blue-500\/20 {
+    background-color: rgba(59, 130, 246, 0.2);
+}
+
+.text-blue-200 {
+    color: #bfdbfe;
+}
+
+.border-blue-500\/30 {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.bg-yellow-500\/20 {
+    background-color: rgba(234, 179, 8, 0.2);
+}
+
+.text-yellow-200 {
+    color: #fef08a;
+}
+
+.border-yellow-500\/30 {
+    border-color: rgba(234, 179, 8, 0.3);
+}
+
+.bg-green-500\/20 {
+    background-color: rgba(34, 197, 94, 0.2);
+}
+
+.text-green-200 {
+    color: #bbf7d0;
+}
+
+.border-green-500\/30 {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.bg-slate-500\/20 {
+    background-color: rgba(100, 116, 139, 0.2);
+}
+
+.text-slate-300 {
+    color: #cbd5e1;
+}
+
+.border-slate-500\/30 {
+    border-color: rgba(100, 116, 139, 0.3);
+}
+
+/* Tailwind-ish utilities */
+.inline-flex {
+    display: inline-flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.shrink-0 {
+    flex-shrink: 0;
+}
+
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.py-0.5 {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.border {
+    border-width: 1px;
+}
+
+.border-2 {
+    border-width: 2px;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-8 {
+    width: 2rem;
+}
+
+.h-8 {
+    height: 2rem;
+}
+
+.w-12 {
+    width: 3rem;
+}
+
+.h-12 {
+    height: 3rem;
+}
+
+.w-1.5 {
+    width: 0.375rem;
+}
+
+.h-1.5 {
+    height: 0.375rem;
+}
+
+.max-w-2xl {
+    max-width: 42rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.relative {
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.sm\:flex {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .sm\:flex {
+        display: flex;
+    }
+}
+
+/* Colors */
+.text-slate-200 {
+    color: #e2e8f0;
+}
+
+.text-slate-400 {
+    color: #94a3b8;
+}
+
+.text-slate-500 {
+    color: #64748b;
+}
+
+.text-slate-600 {
+    color: #475569;
+}
+
+.bg-slate-800 {
+    background-color: #1e293b;
+}
+
+.bg-slate-800\/50 {
+    background-color: rgba(30, 41, 59, 0.5);
+}
+
+.border-slate-800 {
+    border-color: #1e293b;
+}
+
+.border-slate-600 {
+    border-color: #475569;
+}
+
+.text-sky-400 {
+    color: #38bdf8;
+}
+
+.bg-sky-500 {
+    background-color: #0ea5e9;
+}
+
+.bg-sky-500\/20 {
+    background-color: rgba(14, 165, 233, 0.2);
+}
+
+.border-sky-500 {
+    border-color: #0ea5e9;
+}
+
+.text-green-400 {
+    color: #4ade80;
+}
+
+.bg-green-500\/20 {
+    background-color: rgba(34, 197, 94, 0.2);
+}
+
+.border-green-500 {
+    border-color: #22c55e;
+}
+
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.duration-300 {
+    transition-duration: 300ms;
+}
+
+.opacity-60 {
+    opacity: 0.6;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+.scale-\[1\.02\]:hover {
+    transform: scale(1.02);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.space-y-2> :not([hidden])~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}

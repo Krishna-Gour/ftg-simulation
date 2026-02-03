@@ -1,0 +1,223 @@
+/* Layout Container */
+.container {
+    display: flex;
+    height: 100%;
+    /* Fill the parent flex container */
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    /* slate-700 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    background-color: #0f172a;
+    /* color-bg */
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: background-color 0.5s ease;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebarBD {
+    background-color: rgba(30, 58, 138, 0.4);
+    border-right-color: rgba(30, 58, 138, 0.5);
+}
+
+.sidebarPM {
+    background-color: rgba(49, 46, 129, 0.4);
+    border-right-color: rgba(49, 46, 129, 0.5);
+}
+
+.sidebarSystem {
+    background-color: rgba(15, 23, 42, 0.8);
+    border-right-color: rgba(30, 41, 59, 0.5);
+}
+
+/* Sidebar Header */
+.sidebarHeader {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logoArea {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logoBox {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.appName {
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.025em;
+}
+
+/* Navigation */
+.nav {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.navItemActive {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.navItemInactive {
+    color: #94a3b8;
+    /* slate-400 */
+}
+
+.navItemInactive:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+/* User Profile */
+.profile {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profileCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.roleLabel {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.roleName {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+/* Main Content Area */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(15, 23, 42, 0.5);
+    /* slate-900/50 */
+}
+
+.header {
+    height: 64px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background-color: rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+.pageTitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: #e2e8f0;
+    /* slate-200 */
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.searchBox {
+    position: relative;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    /* slate-500 */
+}
+
+.searchInput {
+    padding: 6px 16px 6px 40px;
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #cbd5e1;
+    outline: none;
+}
+
+.searchInput:focus {
+    border-color: #0ea5e9;
+    /* sky-500 */
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+}
+
+.contentWrapper {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    position: relative;
+}
