@@ -13,170 +13,101 @@ export interface Step {
     blueprintDesc?: string;
 }
 
+// Project: Project MnM: Interior Trims (Scope: Cockpit, Door Trims, Floor Console)
+// Line Items:
+// - IP Carrier Injection Molding Tool: ₹ 3 Cr
+// - Chute Chanel Vibration: ₹ 40 L
+// - Cockpit Checking Fixture: ₹ 25 L
+// - Laser Scoring Fixture: ₹ 70 L
+// Total: ₹ 4.35 Cr
+
 export const steps: Step[] = [
     {
         id: 1,
-        title: "OEM Nomination (Revenue)",
-        actor: "BD",
-        description: "Receive Nomination from OEM (Mahindra) for Interior Trims.",
+        title: "Nomination",
+        actor: "Customer",
+        description: "Customer nominates project with cost description.",
         type: "manual",
-        details: ["Receive OEM Nomination", "Enter Revenue Details (₹ 2 Cr)", "Initiate Project"],
-        blueprintId: "Context",
-        blueprintTitle: "OEM Intake",
-        blueprintDesc: "Entry of the Income-generating Automotive Project."
+        details: ["Customer: OEM Automotive", "Project Nomination", "Enter Cost Description"],
+        blueprintId: "NOM-01",
+        blueprintTitle: "Customer Nomination",
+        blueprintDesc: "Initial entry point for customer project nomination."
     },
     {
         id: 2,
-        title: "Project Setup & Budgeting",
+        title: "Sales Master Data - Target",
         actor: "BD",
-        description: "Define Project Budget and Payment Milestones for the OEM.",
+        description: "Enter line items with target cost from sales master data.",
         type: "manual",
-        details: ["Enter OEM PO", "Set Target Profit Margin (20%)", "Calculate Estimated Project Cost", "Define Tooling/PPAP Milestones"],
-        blueprintId: "Data Foundation",
-        blueprintTitle: "Project Structure",
-        blueprintDesc: "Establishes the Link between OEM Revenue and Project WBS."
+        details: ["Enter Line Items", "Set Target Costs", "Define Budget"],
+        blueprintId: "SMD-01",
+        blueprintTitle: "Sales Master Data",
+        blueprintDesc: "Define target costs for each line item from sales master data."
     },
     {
         id: 3,
-        title: "Program Scope Review",
-        actor: "PM",
-        description: "Program Manager reviews new Auto Project scope.",
-        type: "manual", // Changed to manual for Dashboard flow
-        details: ["Scope: Interior Trims (XUV700)", "Budget: 1.60 Cr", "Target PO Date: Immediate and give an proceed to PR Release button"],
-        blueprintId: "GAP-03 / 4.3",
-        blueprintTitle: "Scope Validation",
-        blueprintDesc: "Initial review of project parameters."
+        title: "Purchase Nomination",
+        actor: "BD",
+        description: "Purchase team reviews negotiated quotes and nominates final costs.",
+        type: "manual",
+        details: ["Review Quotes", "Validate Pricing", "Nominate Final Costs"],
+        blueprintId: "PN-01",
+        blueprintTitle: "Purchase Nomination",
+        blueprintDesc: "Purchase team reviews and validates the nominated costs after negotiation."
     },
     {
         id: 4,
-        title: "PR Creation & POrg Check",
+        title: "PR Release",
         actor: "PM",
-        description: "Select Purchasing Organization and Release PR to Sourcing.",
+        description: "Program Manager reviews status and releases Purchase Requisition.",
         type: "manual",
-        details: ["1st: Give list of line items for which PR will be raised", "2nd: POrg Selection", "3rd: Release PR", "Simulate screen of PR Approval by relevant authorities via auto email", "Show: PO Negotiation Simulation"],
-        blueprintId: "GAP-03 / 4.3",
-        blueprintTitle: "Org Structure Validation",
-        blueprintDesc: "Ensures PR is assigned to the correct plant purchasing group."
+        details: ["Review PR Status", "Validate Costs", "Release PR"],
+        blueprintId: "PR-REL-01",
+        blueprintTitle: "PR Release",
+        blueprintDesc: "Formal release of purchase requisition."
     },
     {
         id: 5,
-        title: "PO Negotiation Simulation",
+        title: "PO Release",
         actor: "System",
-        description: "System converts PR to PO with negotiated savings (PO < PR).",
+        description: "System processes Purchase Order release with vendor allocation.",
         type: "automated",
-        details: ["Purchase Price Validation: Always show full PO and release button", "Simulate screen of PO Approval by relevant authorities via auto email", "On approval vendor receiving PO via auto mail"],
-        blueprintId: "GAP-01 / 4.1",
-        blueprintTitle: "Auto PO Conversion",
-        blueprintDesc: "Converts PR to PO. Logic handles value changes due to negotiation/contracts."
+        details: ["Convert PR to PO", "Vendor Allocation", "Send PO to Vendor"],
+        blueprintId: "PO-REL-01",
+        blueprintTitle: "PO Release",
+        blueprintDesc: "Automated conversion and release of Purchase Order to selected vendor."
     },
     {
         id: 6,
-        title: "Purchase Price Validation",
-        actor: "PM",
-        description: "Validation ensuring Negotiated PO price doesn't exceed approved PR budget.",
-        type: "manual",
-        details: ["Compare PO vs PR", "Validate Savings", "Approve Cost"],
-        blueprintId: "GAP-05 / 4.5",
-        blueprintTitle: "Price/Aging Alerts",
-        blueprintDesc: "Ensures Cost Control before releasing the order to the supplier."
+        title: "Stage Payment",
+        actor: "System",
+        description: "Process stage payment (Advance 20%) against Purchase Order.",
+        type: "automated",
+        details: ["Process Advance Payment (20%)", "Amount: ₹ 87 L", "Update Payment Status"],
+        blueprintId: "PAY-STG-01",
+        blueprintTitle: "Stage Payment",
+        blueprintDesc: "Initial advance payment to vendor for project kickoff."
     },
     {
         id: 7,
-        title: "Indirect PO Release Strategy",
-        actor: "PM",
-        description: "Release Purchase Order after technical and commercial review. Select Payment Terms (e.g., Z002) to finalize.",
-        type: "manual",
-        details: ["Review Final PO Value", "Select Payment Policy (20-40-40)", "Trigger Vendor Notification"],
-        blueprintId: "GAP-04 / 4.4",
-        blueprintTitle: "Execution Monitoring",
-        blueprintDesc: "Milestone confirmation drives both AP (Vendor) and AR (Customer) workflows."
+        title: "GRN",
+        actor: "System",
+        description: "Record Goods Receipt Note for delivered items.",
+        type: "automated",
+        details: ["Verify Delivery", "Create GRN", "Update Inventory"],
+        blueprintId: "GRN-01",
+        blueprintTitle: "Goods Receipt",
+        blueprintDesc: "Recording physical receipt of goods against Purchase Order."
     },
     {
         id: 8,
-        title: "Payment Reminders (AR/AP)",
+        title: "Final Payment",
         actor: "System",
-        description: "Monitoring due dates for Supplier Payments and Customer Receivables.",
+        description: "Process final settlement payment (80%) after goods receipt.",
         type: "automated",
-        details: ["Monitor AP Aging (Vendor)", "Monitor AR Aging (Customer)", "Send Reminders"],
-        blueprintId: "GAP-09 / 4.9",
-        blueprintTitle: "MIGO Invoice Visibility",
-        blueprintDesc: "Visibility into liability (Vendor) vs asset (Customer Work) value."
+        details: ["Process Final Payment (80%)", "Amount: ₹ 3.48 Cr", "Close PO"],
+        blueprintId: "PAY-FIN-01",
+        blueprintTitle: "Final Payment",
+        blueprintDesc: "Final settlement against verified goods receipt."
     },
-    {
-        id: 9,
-        title: "Service Confirmation",
-        actor: "System",
-        description: "Confirming Logistics/Handling Services to allow invoicing.",
-        type: "automated",
-        details: ["Confirm Service Entry", "Update Project Cost", "Ready for Billing"],
-        blueprintId: "GAP-07 / 4.7",
-        blueprintTitle: "Spend Analysis Report",
-        blueprintDesc: "Consolidated view of Project Cost vs Revenue."
-    },
-    {
-        id: 10,
-        title: "Payment 1: Advance (20%)",
-        actor: "System",
-        description: "Processing Tooling Advance (Z002 Term: 20-40-40).",
-        type: "automated",
-        details: ["Pay Advance (₹ 28 L)", "Update Status: Tooling Kick-off Confirmed (T0)", "Debit Asset Account"],
-        blueprintId: "GAP-12 / 4.12",
-        blueprintTitle: "Capital Advance",
-        blueprintDesc: "Initial liquidity for vendor tooling kickoff."
-    },
-    {
-        id: 11,
-        title: "Milestone Update: Tooling",
-        actor: "PM",
-        description: "Program Team updates the completion of next milestone.",
-        type: "manual",
-        details: ["Verify Tooling Trial", "Upload T0 Inspection Report", "Approve for Milestone Payment"],
-        blueprintId: "GAP-06 / 4.6",
-        blueprintTitle: "Milestone Confirmation",
-        blueprintDesc: "Technical verification required to unlock next payment tranche."
-    },
-    {
-        id: 12,
-        title: "Payment 2: Milestone (40%)",
-        actor: "System",
-        description: "Processing PPAP/Interim Milestone Payment.",
-        type: "automated",
-        details: ["Pay Milestone (₹ 56 L)", "Update Status: PPAP Quality Approved", "Check Quality Mgmt"],
-        blueprintId: "GAP-10 / 4.10",
-        blueprintTitle: "Progress Payment",
-        blueprintDesc: "Payment against verified quality milestones."
-    },
-    {
-        id: 13,
-        title: "Milestone Update: Delivery",
-        actor: "PM",
-        description: "Program Team updates the completion of next milestone.",
-        type: "manual",
-        details: ["Verify Bulk Supply", "Check GRN (Goods Receipt)", "Approve Final Settlement"],
-        blueprintId: "GAP-06 / 4.6",
-        blueprintTitle: "Delivery Confirmation",
-        blueprintDesc: "Confirming physical receipt of goods to authorize final payment."
-    },
-    {
-        id: 14,
-        title: "Payment 3: Final (40%)",
-        actor: "System",
-        description: "Final Settlement against Goods Receipt.",
-        type: "automated",
-        details: ["Pay Balance (₹ 56 L)", "Update Status: Project Financial Closure", "Close PO"],
-        blueprintId: "GAP-11 / 4.11",
-        blueprintTitle: "Final Settlement",
-        blueprintDesc: "Closing vendor liability."
-    },
-    {
-        id: 15,
-        title: "Project P&L Summary",
-        actor: "PM",
-        description: "Final Profit & Loss view: Customer Revenue - Supplier Cost = Margin.",
-        type: "manual",
-        details: ["View Revenue (₹ 2 Cr)", "View Cost (₹ 1.4 Cr)", "Net Margin (₹ 60 L)", "Status: Closed"],
-        blueprintId: "GAP-07 / 4.7",
-        blueprintTitle: "Consolidated Profitability",
-        blueprintDesc: "End-to-end traceability of Project Profitability."
-    }
 ];

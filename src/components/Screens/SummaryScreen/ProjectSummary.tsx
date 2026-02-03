@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScreenLayout } from '../Layout/ScreenLayout';
-import { FileText, CheckCircle, CreditCard, ShoppingCart, RefreshCw, Briefcase } from 'lucide-react';
+import { CheckCircle, RefreshCw, TrendingUp } from 'lucide-react';
 import styles from './ProjectSummary.module.css';
 import { motion } from 'framer-motion';
 
@@ -10,147 +10,124 @@ interface ProjectSummaryProps {
 
 export const ProjectSummary: React.FC<ProjectSummaryProps> = ({ onRestart }) => {
     return (
-        <ScreenLayout role="PM" title="End-to-End Project Traceability (GAP-07)">
+        <ScreenLayout role="PM" title="Procurement Complete">
             <div className={styles.container}>
 
-                {/* Visual Timeline */}
-                <div className={styles.timeline}>
-                    <div className={styles.stages}>
-                        <div className={styles.stageNode}>
-                            <div className={`${styles.nodeCircle} ${styles.active}`}>
-                                <FileText size={20} />
-                            </div>
-                            <span className={styles.nodeTitle}>Nomination</span>
+                {/* Success Header */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center mb-8"
+                >
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500/20 rounded-full mb-4">
+                        <CheckCircle size={48} className="text-green-400" />
+                    </div>
+                    <h2 className="text-3xl font-bold text-white mb-2">Project MnM Complete!</h2>
+                    <p className="text-slate-400 text-sm">End-to-end procurement workflow executed successfully</p>
+                </motion.div>
+
+                {/* Summary Stats Grid */}
+                <div className="grid grid-cols-4 gap-4 mb-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-center"
+                    >
+                        <div className="text-slate-400 text-xs mb-1">Total Value</div>
+                        <div className="text-2xl font-bold text-white">₹ 4.35 Cr</div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-center"
+                    >
+                        <div className="text-slate-400 text-xs mb-1">Items</div>
+                        <div className="text-2xl font-bold text-white">4</div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-center"
+                    >
+                        <div className="text-slate-400 text-xs mb-1">Payments</div>
+                        <div className="text-2xl font-bold text-green-400">2 / 2 ✓</div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="bg-slate-800/50 border border-emerald-700 rounded-lg p-4 text-center"
+                    >
+                        <div className="text-emerald-400 text-xs mb-1 flex items-center justify-center gap-1">
+                            <TrendingUp size={12} />
+                            Savings
                         </div>
-                        <div className={styles.stageNode}>
-                            <div className={`${styles.nodeCircle} ${styles.active}`}>
-                                <ShoppingCart size={20} />
-                            </div>
-                            <span className={styles.nodeTitle}>Purchasing</span>
+                        <div className="text-2xl font-bold text-emerald-400">₹ 15 L</div>
+                    </motion.div>
+                </div>
+
+                {/* Workflow Steps Completed */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-slate-800/50 border border-slate-700 rounded-lg p-6"
+                >
+                    <h3 className="text-white font-semibold text-sm mb-4">Workflow Completed</h3>
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>Customer Nomination</span>
                         </div>
-                        <div className={styles.stageNode}>
-                            <div className={`${styles.nodeCircle} ${styles.active}`}>
-                                <CheckCircle size={20} />
-                            </div>
-                            <span className={styles.nodeTitle}>Delivery</span>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>Vendor Negotiation</span>
                         </div>
-                        <div className={styles.stageNode}>
-                            <div className={`${styles.nodeCircle} ${styles.active}`}>
-                                <CreditCard size={20} />
-                            </div>
-                            <span className={styles.nodeTitle}>Settlement</span>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>PR Release</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>PO Release</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>Stage Payment</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>Goods Receipt</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>Final Payment</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                            <CheckCircle size={14} className="text-green-400" />
+                            <span>PO Closure</span>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* Data Grid */}
-                <div className={styles.detailsGrid}>
-                    {/* Nomination Card - REVENUE */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className={styles.card}
-                        style={{ borderLeft: '4px solid #4ade80' }} // Green for Revenue
+                {/* Restart Button */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                    className="text-center mt-8"
+                >
+                    <button
+                        onClick={onRestart}
+                        className="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 mx-auto transition-all"
                     >
-                        <div className={styles.cardHeader}>
-                            <h3 className={styles.cardTitle}><Briefcase size={18} className="text-green-400" /> Customer Nomination (Inflow)</h3>
-                            <span className={styles.statusBadge} style={{ background: '#4ade8022', color: '#4ade80' }}>Received</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>OEM Customer</span>
-                            <span className={styles.value}>Mahindra Automotive</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Contract Value</span>
-                            <span className={`${styles.value} ${styles.mono} text-green-400`}>₹ 2,00,00,000</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Project Scope</span>
-                            <span className={styles.value}>XUV700 Interior Trims</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Payment Status</span>
-                            <span className={styles.value}>received 100%</span>
-                        </div>
-                    </motion.div>
-
-                    {/* Procurement Card - COST */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                        className={styles.card}
-                        style={{ borderLeft: '4px solid #f472b6' }} // Pink/Red for Cost
-                    >
-                        <div className={styles.cardHeader}>
-                            <h3 className={styles.cardTitle}><ShoppingCart size={18} className="text-pink-400" /> Supplier Contracts (Outflow)</h3>
-                            <span className={styles.statusBadge} style={{ background: '#f472b622', color: '#f472b6' }}>Active</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Purchase Req's</span>
-                            <span className={styles.value}>5 PRs <span className="text-xs text-slate-500">(RM, Tooling, Logs)</span></span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Purchase Orders</span>
-                            <span className={styles.value}>3 POs Released</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Primary Vendor</span>
-                            <span className={`${styles.value}`}>Polymers Inc</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Total PO Value</span>
-                            <span className={`${styles.value} text-pink-400 font-bold`}>₹ 1,40,00,000</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Negotiated Savings</span>
-                            <span className={`${styles.value} text-green-400`}>₹ 10 Lakhs (6.6%)</span>
-                        </div>
-                    </motion.div>
-
-                    {/* Financials Card - PROFIT */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                        className={styles.card}
-                        style={{ borderLeft: '4px solid #38bdf8' }}
-                    >
-                        <div className={styles.cardHeader}>
-                            <h3 className={styles.cardTitle}><CreditCard size={18} className="text-sky-400" /> Project Profitability</h3>
-                            <span className={styles.statusBadge}>Closed</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Total Revenue</span>
-                            <span className={`${styles.value} text-green-400`}>₹ 200 Lakhs</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Total Cost (PO)</span>
-                            <span className={`${styles.value} text-pink-400`}>(-₹ 140 Lakhs)</span>
-                        </div>
-                        <div className={styles.row} style={{ borderTop: '1px solid #334155', paddingTop: '8px', marginTop: '8px' }}>
-                            <span className={styles.label}>Net Margin</span>
-                            <span className={`${styles.value} ${styles.mono} text-sky-400 font-bold text-lg`}>₹ 60,00,000</span>
-                        </div>
-                        <div className={styles.row}>
-                            <span className={styles.label}>Margin %</span>
-                            <span className={`${styles.value} text-slate-300`}>30.0%</span>
-                        </div>
-                    </motion.div>
-
-                    {/* Final Status */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-                        className={`${styles.card} ${styles.finalStatus}`}
-                    >
-                        <div>
-                            <h3 className={styles.cardTitle}>Project Completion Status</h3>
-                            <p className="text-slate-300 text-sm mt-1">
-                                <span className="text-green-400">✔ Customer Paid</span> •
-                                <span className="text-green-400 ml-2">✔ Supplier Paid</span> •
-                                <span className="text-sky-400 ml-2">✔ Project Closed</span>
-                            </p>
-                        </div>
-                        <button onClick={onRestart} className={styles.restartBtn}>
-                            <RefreshCw size={18} /> Restart Simulation
-                        </button>
-                    </motion.div>
-                </div>
+                        <RefreshCw size={18} /> Restart Demo
+                    </button>
+                </motion.div>
 
             </div>
         </ScreenLayout>

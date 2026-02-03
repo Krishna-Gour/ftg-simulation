@@ -30,35 +30,43 @@ function App() {
         setCurrentStepIndex(0);
     };
 
-    // Screen Router Logic
+    // Screen Router Logic - Updated for new flow
+    // Flow: Nomination (1) → Sales Master Data (2) → Purchase Nomination (3) → PR Release (4) → PO Release (5) → Stage Payment (6) → GRN (7) → Final Payment (8)
     const renderScreen = () => {
-        if (!currentStep) return null;
-
-        // Final Summary Step (Now ID 15)
-        if (currentStep.id === 15) {
+        // Show summary after all steps completed
+        if (currentStepIndex >= steps.length) {
             return <ProjectSummary onRestart={handleRestart} />;
         }
+        
+        if (!currentStep) return null;
 
         const role = currentStep.actor;
 
         switch (role) {
             case 'BD':
             case 'Customer':
+                // Steps 1 (Nomination) and 2 (Sales Master Data - Target with Purchase Nomination)
                 return <BDScreen onNext={handleNext} stepId={currentStep.id} />;
 
             case 'PM':
-                // Handles 3, 4, 6, 7 and Milestone Updates 11, 13
+                // Step 4 (PR Release) - Step 3 redirects here since vendor negotiation is in Step 2
                 return <PMScreen onNext={handleNext} stepId={currentStep.id} />;
 
             case 'System':
+                // Step 5: PO Release
                 if (currentStep.id === 5) {
                     return <NegotiationScreen onNext={handleNext} stepId={currentStep.id} />;
                 }
-                if (currentStep.id === 8 || currentStep.id === 9) {
+                // Step 6: Stage Payment
+                if (currentStep.id === 6) {
+                    return <PaymentScreen onNext={handleNext} stepId={currentStep.id} />;
+                }
+                // Step 7: GRN (Goods Receipt)
+                if (currentStep.id === 7) {
                     return <GoodsReceiptScreen onNext={handleNext} stepId={currentStep.id} />;
                 }
-                // Interleaved Payments: 10, 12, 14
-                if (currentStep.id === 10 || currentStep.id === 12 || currentStep.id === 14) {
+                // Step 8: Final Payment
+                if (currentStep.id === 8) {
                     return <PaymentScreen onNext={handleNext} stepId={currentStep.id} />;
                 }
                 return <SystemScreen onNext={handleNext} stepId={currentStep.id} />;

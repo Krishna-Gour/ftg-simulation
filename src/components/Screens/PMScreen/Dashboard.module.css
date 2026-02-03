@@ -1,19 +1,19 @@
 .stack {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
 }
 
 /* Stats Grid */
 .statsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 12px;
 }
 
 .statCard {
-    padding: 16px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 10px;
 }
 
 .statPrimary {
@@ -58,7 +58,7 @@
 }
 
 .panelHeader {
-    padding: 16px 24px;
+    padding: 10px 16px;
     border-bottom: 1px solid rgba(51, 65, 85, 1);
     background-color: rgba(30, 41, 59, 0.3);
     display: flex;
@@ -69,25 +69,26 @@
 .panelTitle {
     font-weight: 600;
     color: white;
+    font-size: 14px;
 }
 
 .badgeNew {
     background-color: #6366f1;
     color: white;
     padding: 2px 8px;
-    font-size: 12px;
+    font-size: 10px;
     border-radius: 999px;
 }
 
 .panelBody {
-    padding: 8px;
+    padding: 12px;
 }
 
 .actionItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
+    padding: 12px;
     border-radius: 8px;
     border: 1px solid transparent;
     cursor: pointer;

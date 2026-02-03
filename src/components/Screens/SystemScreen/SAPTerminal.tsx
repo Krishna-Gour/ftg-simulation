@@ -3,6 +3,7 @@ import { ScreenLayout } from '../Layout/ScreenLayout';
 import { Terminal, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styles from './SAPTerminal.module.css';
+import { ProjectStatusTimeline } from '../../UI/ProjectStatusTimeline';
 
 interface SystemScreenProps {
     onNext: () => void;
@@ -110,6 +111,7 @@ export const SystemScreen: React.FC<SystemScreenProps> = ({ onNext, stepId }) =>
 
     return (
         <ScreenLayout role="System" title={getTitle(stepId)}>
+            <ProjectStatusTimeline currentStepId={stepId} />
             <div className={styles.terminal}>
                 <div className={styles.scanline} />
                 <div className={styles.header}>

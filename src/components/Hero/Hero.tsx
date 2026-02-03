@@ -21,11 +21,11 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
                 </span>
 
                 <h1 className={styles.title}>
-                    Nomination to Payment
+                    Sales to Payment Flow
                 </h1>
 
                 <p className={styles.subtitle}>
-                    Explore the end-to-end flow from Business Nomination to Final Payment, featuring seamless integration between Business Development, Program Management, and Automated System Logic.
+                    Explore the end-to-end flow from Sales Entry to Final Payment for Project MnM: Interior Trims. Experience seamless integration between Business Development, Program Management, and Automated System workflows.
                 </p>
 
                 <motion.button
