@@ -41,6 +41,7 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
     const [currentVendorIdx, setCurrentVendorIdx] = useState(0);
     const [filledItems, setFilledItems] = useState<number[]>([]);
     const [overriddenItems, setOverriddenItems] = useState<number[]>([]);
+    const [selectedOverride, setSelectedOverride] = useState<number | null>(null);
 
     // Reset states when step changes
     useEffect(() => {
@@ -155,14 +156,14 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
         return (
             <ScreenLayout role="BD" title="Sales Master Data - Target & Purchase Nomination">
                 <ProjectStatusTimeline currentStepId={negotiationPhase === 'complete' ? 3 : 2} />
-                <div className={styles.container}>
-                    <div className={styles.card} style={{ maxWidth: '1000px' }}>
+                <div className={styles.container} style={{ maxWidth: '1200px' }}>
+                    <div className={styles.card} style={{ width: '100%' }}>
                         <h3 className={styles.title}>Line Items - Target Cost & Vendor Negotiation</h3>
                         <p style={{ color: '#94a3b8', fontSize: '11px', marginBottom: '12px' }}>
                             Target costs from sales master data + Purchase nomination from vendor quotes
                         </p>
                         <div className={styles.stack}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '12px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '2fr 360px', gap: '12px' }}>
                                 {/* Left: Compact Line Items Table */}
                                 <div>
                                     {/* Header */}
@@ -243,6 +244,30 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
                                             </div>
                                         </div>
                                         <div style={{ color: '#64748b', fontSize: '11px' }}>Selected based on best pricing & delivery terms.</div>
+                                        {/* Centralized Override Control */}
+                                        <div style={{ marginTop: '8px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                            <select
+                                                value={selectedOverride ?? ''}
+                                                onChange={(e) => setSelectedOverride(e.target.value === '' ? null : Number(e.target.value))}
+                                                style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(51,65,85,0.6)', color: 'white', padding: '6px 8px', borderRadius: '6px', fontSize: '11px' }}
+                                            >
+                                                <option value="">Select item to override</option>
+                                                {lineItemsData.map((it, idx) => (
+                                                    <option key={idx} value={idx}>{`${idx + 1} — ${it.name}`}</option>
+                                                ))}
+                                            </select>
+                                            <button
+                                                onClick={() => {
+                                                    if (selectedOverride === null) return;
+                                                    const idx = selectedOverride;
+                                                    setOverriddenItems(prev => prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]);
+                                                }}
+                                                disabled={selectedOverride === null}
+                                                style={{ padding: '6px 10px', borderRadius: '6px', background: selectedOverride !== null && overriddenItems.includes(selectedOverride) ? '#ef4444' : '#f59e0b', color: '#050617', fontSize: '11px', fontWeight: 700, border: 'none', cursor: selectedOverride === null ? 'not-allowed' : 'pointer' }}
+                                            >
+                                                {selectedOverride !== null && overriddenItems.includes(selectedOverride) ? 'Undo Override' : 'Override'}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <AnimatePresence mode="wait">
