@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScreenLayout } from '../Layout/ScreenLayout';
-import { UploadCloud, Check, ArrowRight, TrendingDown, CheckCircle, XCircle, AlertTriangle, Users } from 'lucide-react';
+import { UploadCloud, Check, ArrowRight, TrendingDown, CheckCircle, XCircle, Users } from 'lucide-react';
 import styles from './NominationForm.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectStatusTimeline } from '../../UI/ProjectStatusTimeline';
@@ -15,7 +15,7 @@ const lineItemsData = [
     { name: 'IP Carrier Injection Molding Tool', targetCost: 320, unit: 'L' },
     { name: 'Chute Chanel Vibration', targetCost: 38, unit: 'L' },  // This one will be over budget (40 > 38)
     { name: 'Cockpit Checking Fixture', targetCost: 28, unit: 'L' },
-    { name: 'Laser Scoring Fixture', targetCost: 65, unit: 'L' },
+    { name: 'Laser Scoring Fixture', targetCost: 70, unit: 'L' },
 ];
 
 // Vendors with their quotes
@@ -92,9 +92,7 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
         }
     }, [stepId, negotiationPhase, overriddenItems, onNext]);
 
-    const handleOverride = (idx: number) => {
-        setOverriddenItems(prev => [...prev, idx]);
-    };
+    // override functionality removed from compact UI; keep overriddenItems state for compatibility
 
     const allItemsValid = () => {
         return lineItemsData.every((item, idx) => {
@@ -164,133 +162,118 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
                             Target costs from sales master data + Purchase nomination from vendor quotes
                         </p>
                         <div className={styles.stack}>
-                            {/* Combined Table Header */}
-                            <div style={{ 
-                                display: 'grid', gridTemplateColumns: '45px 2fr 1fr 1fr 1fr', gap: '10px', padding: '8px 12px',
-                                background: 'rgba(51, 65, 85, 0.5)', borderRadius: '8px 8px 0 0',
-                                fontSize: '9px', fontWeight: 600, textTransform: 'uppercase', color: '#94a3b8'
-                            }}>
-                                <span>Item</span>
-                                <span>Description</span>
-                                <span style={{ textAlign: 'right' }}>Target Cost</span>
-                                <span style={{ textAlign: 'right' }}>Nominated Cost</span>
-                                <span style={{ textAlign: 'center' }}>Status</span>
-                            </div>
-                            
-                            {/* Line Items */}
-                            <div style={{ background: 'rgba(30, 41, 59, 0.5)', borderRadius: '0 0 8px 8px' }}>
-                                {lineItemsData.map((item, idx) => {
-                                    const isFilled = filledItems.includes(idx);
-                                    const nominated = finalNominatedCosts[idx];
-                                    const isOverBudget = nominated > item.targetCost;
-                                    const isOverridden = overriddenItems.includes(idx);
-                                    const isValid = !isOverBudget || isOverridden;
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '12px' }}>
+                                {/* Left: Compact Line Items Table */}
+                                <div>
+                                    {/* Header */}
+                                    <div style={{ 
+                                        display: 'grid', gridTemplateColumns: '40px 1fr 80px 80px 64px', gap: '8px', padding: '6px 10px',
+                                        background: 'rgba(51, 65, 85, 0.5)', borderRadius: '6px', fontSize: '9px', fontWeight: 600, textTransform: 'uppercase', color: '#94a3b8'
+                                    }}>
+                                        <span>Item</span>
+                                        <span>Description</span>
+                                        <span style={{ textAlign: 'right' }}>Target</span>
+                                        <span style={{ textAlign: 'right' }}>Nominated</span>
+                                        <span style={{ textAlign: 'center' }}>Status</span>
+                                    </div>
 
-                                    return (
-                                        <motion.div key={idx} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.1 }}
-                                            style={{ display: 'grid', gridTemplateColumns: '45px 2fr 1fr 1fr 1fr', gap: '10px', padding: '10px 12px',
-                                                borderBottom: idx < lineItemsData.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', alignItems: 'center' }}>
-                                            <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: 'rgba(59, 130, 246, 0.2)',
-                                                display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60a5fa', fontWeight: 600, fontSize: '12px' }}>
-                                                {(idx + 1) * 10}
-                                            </div>
-                                            <div>
-                                                <span style={{ color: '#e2e8f0', fontSize: '12px' }}>{item.name}</span>
-                                                <span style={{ display: 'block', color: '#64748b', fontSize: '9px', marginTop: '1px' }}>Capital Equipment / Tooling</span>
-                                            </div>
-                                            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: idx * 0.1 + 0.2 }}
-                                                style={{ textAlign: 'right', color: '#60a5fa', fontWeight: 600, fontFamily: 'monospace', fontSize: '13px' }}>
-                                                {formatValue(item.targetCost, item.unit)}
-                                            </motion.span>
-                                            <div style={{ textAlign: 'right' }}>
-                                                {isFilled ? (
-                                                    <motion.span initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
-                                                        style={{ color: isOverBudget && !isOverridden ? '#f87171' : '#4ade80', fontWeight: 600, fontFamily: 'monospace', fontSize: '15px' }}>
-                                                        {formatValue(nominated, item.unit)}
+                                    {/* Items list - compact rows */}
+                                    <div style={{ background: 'rgba(30, 41, 59, 0.5)', borderRadius: '0 0 6px 6px', overflow: 'hidden' }}>
+                                        {lineItemsData.map((item, idx) => {
+                                            const isFilled = filledItems.includes(idx);
+                                            const nominated = finalNominatedCosts[idx];
+                                            const isOverBudget = nominated > item.targetCost;
+                                            const isOverridden = overriddenItems.includes(idx);
+                                            const isValid = !isOverBudget || isOverridden;
+
+                                            return (
+                                                <motion.div key={idx} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }}
+                                                    style={{ display: 'grid', gridTemplateColumns: '40px 1fr 80px 80px 64px', gap: '8px', padding: '8px 10px',
+                                                        borderBottom: idx < lineItemsData.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none', alignItems: 'center' }}>
+                                                    <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(59,130,246,0.12)',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60a5fa', fontWeight: 600, fontSize: '11px' }}>
+                                                        {(idx + 1) * 10}
+                                                    </div>
+                                                    <div>
+                                                        <span style={{ color: '#e2e8f0', fontSize: '11px' }}>{item.name}</span>
+                                                        <span style={{ display: 'block', color: '#64748b', fontSize: '9px', marginTop: '2px' }}>{item.unit || 'Capital Equipment / Tooling'}</span>
+                                                    </div>
+                                                    <motion.span style={{ textAlign: 'right', color: '#60a5fa', fontWeight: 600, fontFamily: 'monospace', fontSize: '12px' }}>
+                                                        {formatValue(item.targetCost, item.unit)}
                                                     </motion.span>
-                                                ) : <span style={{ color: '#475569' }}>—</span>}
-                                            </div>
-                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                                                {!isFilled ? <span style={{ color: '#475569' }}>—</span>
-                                                : isValid ? (
-                                                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle size={18} className="text-green-400" /></motion.div>
-                                                ) : (
-                                                    <>
-                                                        <XCircle size={16} className="text-red-400" />
-                                                        <button onClick={() => handleOverride(idx)}
-                                                            style={{ background: 'rgba(251, 191, 36, 0.2)', border: '1px solid rgba(251, 191, 36, 0.4)', color: '#fbbf24',
-                                                                padding: '3px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 600, cursor: 'pointer', 
-                                                                display: 'flex', alignItems: 'center', gap: '3px' }}>
-                                                            <AlertTriangle size={10} /> Override
-                                                        </button>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
+                                                    <div style={{ textAlign: 'right' }}>
+                                                        {isFilled ? (
+                                                            <motion.span style={{ color: isOverBudget && !isOverridden ? '#f87171' : '#4ade80', fontWeight: 600, fontFamily: 'monospace', fontSize: '13px' }}>
+                                                                {formatValue(nominated, item.unit)}
+                                                            </motion.span>
+                                                        ) : <span style={{ color: '#475569' }}>—</span>}
+                                                    </div>
+                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        {!isFilled ? <span style={{ color: '#475569', fontSize: '11px' }}>—</span>
+                                                        : isValid ? (<CheckCircle size={16} className="text-green-400" />) : (<XCircle size={16} className="text-red-400" />)}
+                                                    </div>
+                                                </motion.div>
+                                            );
+                                        })}
+                                    </div>
 
-                            {/* Totals */}
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-                                style={{ display: 'grid', gridTemplateColumns: '50px 2fr 1fr 1fr 1fr', gap: '12px', padding: '16px',
-                                    background: 'rgba(51, 65, 85, 0.8)', borderRadius: '8px', marginTop: '8px' }}>
-                                <span></span>
-                                <span style={{ color: '#fff', fontWeight: 600 }}>Total</span>
-                                <span style={{ textAlign: 'right', color: '#60a5fa', fontWeight: 700, fontFamily: 'monospace', fontSize: '16px' }}>
-                                    {formatValue(totalTarget, 'L')}
-                                </span>
-                                <span style={{ textAlign: 'right', color: '#4ade80', fontWeight: 700, fontFamily: 'monospace', fontSize: '16px' }}>
-                                    {negotiationPhase === 'complete' ? formatValue(totalNominated, 'L') : '—'}
-                                </span>
-                                <div style={{ textAlign: 'center' }}>
+                                    {/* Totals - compact */}
+                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+                                        style={{ display: 'grid', gridTemplateColumns: '40px 1fr 80px 80px 64px', gap: '8px', padding: '10px',
+                                            background: 'rgba(51,65,85,0.8)', borderRadius: '6px', marginTop: '8px', fontSize: '12px' }}>
+                                        <span></span>
+                                        <span style={{ color: '#fff', fontWeight: 600 }}>Total</span>
+                                        <span style={{ textAlign: 'right', color: '#60a5fa', fontWeight: 700, fontFamily: 'monospace' }}>{formatValue(totalTarget, 'L')}</span>
+                                        <span style={{ textAlign: 'right', color: '#4ade80', fontWeight: 700, fontFamily: 'monospace' }}>{negotiationPhase === 'complete' ? formatValue(totalNominated, 'L') : '—'}</span>
+                                        <div style={{ textAlign: 'center' }}>{negotiationPhase === 'complete' && allItemsValid() && (<span style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}>✓</span>)}</div>
+                                    </motion.div>
+                                </div>
+
+                                {/* Right: Negotiation / Vendor Panel (compact) */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ padding: '10px', background: 'rgba(41, 45, 50, 0.6)', borderRadius: '6px' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                                            <div>
+                                                <div style={{ color: '#94a3b8', fontSize: '10px', fontWeight: 700 }}>Current Vendor</div>
+                                                <div style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>AutoParts Manufacturing</div>
+                                            </div>
+                                            <div style={{ textAlign: 'right' }}>
+                                                <div style={{ color: '#94a3b8', fontSize: '10px' }}>Quotes</div>
+                                                <div style={{ color: '#60a5fa', fontWeight: 700 }}>3</div>
+                                            </div>
+                                        </div>
+                                        <div style={{ color: '#64748b', fontSize: '11px' }}>Selected based on best pricing & delivery terms.</div>
+                                    </div>
+
+                                    <AnimatePresence mode="wait">
+                                        {negotiationPhase === 'vendors' && (
+                                            <motion.div key="receiving" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                                style={{ padding: '8px', background: 'rgba(59,130,246,0.08)', borderRadius: '6px', color: '#93c5fd', fontSize: '12px' }}>
+                                                <Users size={14} className="text-blue-400" /> Negotiating with vendors ({currentVendorIdx + 1}/3)...
+                                            </motion.div>
+                                        )}
+                                        {negotiationPhase === 'comparing' && (
+                                            <motion.div key="comparing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                                style={{ padding: '8px', background: 'rgba(251,191,36,0.08)', borderRadius: '6px', color: '#fcd34d', fontSize: '12px' }}>
+                                                <TrendingDown size={14} className="text-amber-400" /> Selecting best vendor...
+                                            </motion.div>
+                                        )}
+                                        {negotiationPhase === 'filling' && (
+                                            <motion.div key="filling" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                                style={{ padding: '8px', background: 'rgba(34,197,94,0.08)', borderRadius: '6px', color: '#4ade80', fontSize: '12px' }}>
+                                                <CheckCircle size={14} className="text-green-400" /> Filling nominated costs...
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    {/* Auto-proceed message */}
                                     {negotiationPhase === 'complete' && allItemsValid() && (
-                                        <span style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}>✓</span>
+                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ padding: '8px', background: 'rgba(34,197,94,0.06)', borderRadius: '6px', textAlign: 'center', color: '#4ade80', fontWeight: 600 }}>
+                                            ✓ Purchase Nomination Complete - Proceeding to PR Release...
+                                        </motion.div>
                                     )}
                                 </div>
-                            </motion.div>
-
-                            {/* Vendor Negotiation Status */}
-                            <AnimatePresence mode="wait">
-                                {negotiationPhase === 'vendors' && (
-                                    <motion.div key="receiving" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                        style={{ padding: '8px 10px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)',
-                                            borderRadius: '6px', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                        <Users size={14} className="text-blue-400" />
-                                        <span style={{ color: '#93c5fd', fontSize: '11px' }}>
-                                            Negotiating with vendors ({currentVendorIdx + 1}/3)...
-                                        </span>
-                                    </motion.div>
-                                )}
-                                {negotiationPhase === 'comparing' && (
-                                    <motion.div key="comparing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                        style={{ padding: '8px 10px', background: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.3)',
-                                            borderRadius: '6px', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                        <TrendingDown size={14} className="text-amber-400" />
-                                        <span style={{ color: '#fcd34d', fontSize: '11px' }}>
-                                            Selecting best vendor...
-                                        </span>
-                                    </motion.div>
-                                )}
-                                {negotiationPhase === 'filling' && (
-                                    <motion.div key="filling" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                        style={{ padding: '8px 10px', background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)',
-                                            borderRadius: '6px', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                        <CheckCircle size={14} className="text-green-400" />
-                                        <span style={{ color: '#4ade80', fontSize: '11px' }}>
-                                            Selected: AutoParts Manufacturing - Filling nominated costs...
-                                        </span>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-
-                            {/* Auto-proceeding message */}
-                            {negotiationPhase === 'complete' && allItemsValid() && (
-                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                                    style={{ marginTop: '16px', textAlign: 'center', color: '#4ade80', fontSize: '13px', fontWeight: 600 }}>
-                                    ✓ Purchase Nomination Complete - Proceeding to PR Release...
-                                </motion.div>
-                            )}
+                            </div>
                         </div>
                     </div>
                 </div>
