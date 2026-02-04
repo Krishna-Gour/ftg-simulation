@@ -66,7 +66,7 @@ export const ProjectSummary: React.FC<ProjectSummaryProps> = ({ onRestart }) => 
                             <TrendingUp size={12} />
                             Savings
                         </div>
-                        <div className="text-2xl font-bold text-emerald-400">₹ 15 L</div>
+                        <div className="text-2xl font-bold text-emerald-400">₹ 16 L</div>
                     </motion.div>
                 </div>
 
@@ -123,9 +123,9 @@ export const ProjectSummary: React.FC<ProjectSummaryProps> = ({ onRestart }) => 
                 >
                     <button
                         onClick={onRestart}
-                        className="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 mx-auto transition-all"
+                        className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white px-10 py-4 rounded-xl font-bold text-base flex items-center gap-3 mx-auto transition-all shadow-2xl shadow-sky-900/50 hover:shadow-sky-800/60 hover:scale-[1.05] active:scale-[0.98]"
                     >
-                        <RefreshCw size={18} /> Restart Demo
+                        <RefreshCw size={20} /> Restart Demo
                     </button>
                 </motion.div>
 

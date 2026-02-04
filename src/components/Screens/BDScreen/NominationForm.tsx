@@ -15,17 +15,17 @@ const lineItemsData = [
     { name: 'IP Carrier Injection Molding Tool', targetCost: 320, unit: 'L' },
     { name: 'Chute Chanel Vibration', targetCost: 38, unit: 'L' },  // This one will be over budget (40 > 38)
     { name: 'Cockpit Checking Fixture', targetCost: 28, unit: 'L' },
-    { name: 'Laser Scoring Fixture', targetCost: 70, unit: 'L' },
+    { name: 'Laser Scoring Fixture', targetCost: 65, unit: 'L' },  // Updated from 70 to 65
 ];
 
 // Vendors with their quotes
 const vendorQuotes = [
     { vendor: 'Tooling Solutions Ltd', quotes: [295, 42, 24, 68] },
     { vendor: 'Precision Tools Inc', quotes: [310, 39, 27, 72] },
-    { vendor: 'AutoParts Manufacturing', quotes: [300, 40, 25, 70] },  // 40 > 38 for item 2
+    { vendor: 'AutoParts Manufacturing', quotes: [300, 40, 25, 70] },  // 40 > 38 for item 2, 70 > 65 for item 4
 ];
 
-const finalNominatedCosts = [300, 40, 25, 70];  // Only index 1 (40) exceeds target (38)
+const finalNominatedCosts = [300, 40, 25, 70];  // indices 1 (40 > 38) and 3 (70 > 65) exceed targets
 
 const formatValue = (val: number, unit: string) => {
     if (val >= 100) return `₹ ${(val / 100).toFixed(1)} Cr`;

@@ -31,14 +31,16 @@ function App() {
     };
 
     // Screen Router Logic - Updated for new flow
-    // Flow: Nomination (1) → Sales Master Data (2) → Purchase Nomination (3) → PR Release (4) → PO Release (5) → Stage Payment (6) → GRN (7) → Final Payment (8)
+    // Flow: Nomination (1) → Sales Master Data (2) → Purchase Nomination (3) → PR Release (4) → PO Release (5) → Stage Payment (6) → GRN (7) → Final Payment (8) → Summary
     const renderScreen = () => {
         // Show summary after all steps completed
         if (currentStepIndex >= steps.length) {
             return <ProjectSummary onRestart={handleRestart} />;
         }
         
-        if (!currentStep) return null;
+        if (!currentStep) {
+            return <ProjectSummary onRestart={handleRestart} />;
+        }
 
         const role = currentStep.actor;
 
@@ -87,20 +89,22 @@ function App() {
                 <div className="h-full w-full flex flex-col md:flex-row p-4 gap-4 relative z-10">
                     {/* Left/Top: Simulation Area */}
                     <div className="flex-1 flex flex-col h-full min-h-0">
-                        {/* Progress Header - Compact */}
-                        <div className="mb-4 flex items-center justify-between px-4">
-                            <div>
-                                <h2 className="text-xs font-semibold text-sky-400 tracking-wider uppercase">Step {currentStepIndex + 1} / {steps.length}</h2>
-                                <h1 className="text-xl font-bold text-white leading-tight">{currentStep.title}</h1>
+                        {/* Progress Header - Compact (hide on summary screen) */}
+                        {currentStepIndex < steps.length && (
+                            <div className="mb-4 flex items-center justify-between px-4">
+                                <div>
+                                    <h2 className="text-xs font-semibold text-sky-400 tracking-wider uppercase">Step {currentStepIndex + 1} / {steps.length}</h2>
+                                    <h1 className="text-xl font-bold text-white leading-tight">{currentStep?.title}</h1>
+                                </div>
+                                <div className="w-1/3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <motion.div
+                                        className="h-full bg-sky-500"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
+                                    />
+                                </div>
                             </div>
-                            <div className="w-1/3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                <motion.div
-                                    className="h-full bg-sky-500"
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
-                                />
-                            </div>
-                        </div>
+                        )}
 
                         {/* Active Screen Area - Flex Grow to fill space */}
                         <div className="flex-1 min-h-0 relative">
@@ -119,10 +123,12 @@ function App() {
                         </div>
                     </div>
 
-                    {/* Right/Bottom: Guide Panel (Fixed width on desktop) */}
-                    <div className="w-full md:w-80 lg:w-96 flex-shrink-0 h-full">
-                        <GuidePanel step={currentStep} />
-                    </div>
+                    {/* Right/Bottom: Guide Panel (Fixed width on desktop) - Hide on summary screen */}
+                    {currentStepIndex < steps.length && (
+                        <div className="w-full md:w-80 lg:w-96 flex-shrink-0 h-full">
+                            <GuidePanel step={currentStep} />
+                        </div>
+                    )}
                 </div>
             )}
         </div>

@@ -21,12 +21,21 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
     const [flowStep, setFlowStep] = useState<number>(0); // 0=idle,1=email sent,2=plant head approved,3=pr approved
     const [flowRunning, setFlowRunning] = useState(false);
     const timersRef = React.useRef<number[]>([]);
+    const approvalRef = React.useRef<HTMLDivElement | null>(null);
 
     if (stepId === 4) {
         const handleReleasePR = () => {
             // start compact approval flow on same screen
+            // clear any previous timers
+            timersRef.current.forEach(t => clearTimeout(t));
+            timersRef.current = [];
+
             setFlowRunning(true);
             setFlowStep(1); // email sent
+
+            // scroll approval panel into view
+            setTimeout(() => approvalRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60);
+
             // email sent -> plant head approves -> PR approved -> proceed
             timersRef.current.push(window.setTimeout(() => setFlowStep(2), 900));
             timersRef.current.push(window.setTimeout(() => setFlowStep(3), 2200));
@@ -45,7 +54,7 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
             };
         }, []);
 
-        if (approvalState !== 'draft') {
+        if (approvalState !== 'draft' || flowRunning) {
             return (
                 <ScreenLayout role="PM" title="PR Release">
                     <div className={styles.stack}>
@@ -53,7 +62,7 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                         <div className={styles.panel}>
                             <div className={styles.panelBody}>
                                 {/* Compact approval flow - all steps on one screen */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 560, margin: '0 auto', padding: '8px 0' }}>
+                                <div ref={approvalRef} style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 560, margin: '0 auto', padding: '8px 0' }}>
                                     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                                         <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(34,197,94,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <CheckCircle size={20} className="text-green-400" />
@@ -132,8 +141,13 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                                         </div>
                                     </div>
                                     <button
-                                        onClick={handleReleasePR} className={styles.actionBtn} style={{ width: '100%' }}>
-                                        Release PR <ArrowRight size={14} />
+                                        onClick={handleReleasePR}
+                                        disabled={flowRunning}
+                                        className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
+                                        style={{ width: '100%' }}
+                                    >
+                                        <ArrowRight size={16} />
+                                        Release PR
                                     </button>
                                 </div>
                             </div>

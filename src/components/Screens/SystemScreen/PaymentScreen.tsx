@@ -117,30 +117,33 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({ onNext, stepId }) 
                         ) : (
                             <button
                                 onClick={handleProcess}
-                                className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold text-sm flex items-center gap-2 transition-all"
+                                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all shadow-xl shadow-green-900/40 hover:shadow-green-800/50 hover:scale-[1.03] active:scale-[0.98]"
                             >
-                                <CreditCard size={16} />
+                                <CreditCard size={20} />
                                 Authorize Payment
                             </button>
                         )}
                     </div>
                 ) : (
                     <motion.div
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                        className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg flex items-center justify-between"
+                        initial={{ opacity: 0, y: 10 }} 
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-2 border-green-500/40 p-5 rounded-xl flex items-center justify-between backdrop-blur-sm"
                     >
-                        <div className="flex items-center gap-3">
-                            <CheckCircle size={20} className="text-green-400" />
+                        <div className="flex items-center gap-4">
+                            <div className="bg-green-500/20 p-3 rounded-xl">
+                                <CheckCircle size={28} className="text-green-400" />
+                            </div>
                             <div>
-                                <h3 className="text-white font-bold text-sm">Payment Successful</h3>
-                                <p className="text-green-300 text-xs">{statusUpdate}</p>
+                                <h3 className="text-white font-bold text-base mb-1">Payment Successful</h3>
+                                <p className="text-green-300 text-sm">{statusUpdate}</p>
                             </div>
                         </div>
                         <button 
                             onClick={onNext} 
-                            className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm font-semibold flex items-center gap-2 transition-all"
+                            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-6 py-3 rounded-lg font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
                         >
-                            Continue <ArrowRight size={14} />
+                            Continue <ArrowRight size={16} />
                         </button>
                     </motion.div>
                 )}

@@ -98,9 +98,9 @@ export const GoodsReceiptScreen: React.FC<GoodsReceiptScreenProps> = ({ onNext }
                         {!scanned && (
                             <button
                                 onClick={handleScan}
-                                className="w-full bg-sky-600 hover:bg-sky-500 text-white px-4 py-3 rounded text-sm font-semibold flex items-center justify-center gap-2 transition-all"
+                                className="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white px-5 py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-sky-900/40 hover:shadow-sky-800/50 hover:scale-[1.02] active:scale-[0.98]"
                             >
-                                <Scale size={16} />
+                                <Scale size={18} />
                                 Verify & Create GRN
                             </button>
                         )}
@@ -112,20 +112,22 @@ export const GoodsReceiptScreen: React.FC<GoodsReceiptScreenProps> = ({ onNext }
                     <motion.div 
                         initial={{ opacity: 0, y: 10 }} 
                         animate={{ opacity: 1, y: 0 }} 
-                        className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg flex items-center justify-between"
+                        className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-2 border-green-500/40 p-5 rounded-xl flex items-center justify-between backdrop-blur-sm"
                     >
-                        <div className="flex items-center gap-3">
-                            <CheckCircle className="text-green-400" size={20} />
+                        <div className="flex items-center gap-4">
+                            <div className="bg-green-500/20 p-3 rounded-xl">
+                                <CheckCircle className="text-green-400" size={28} />
+                            </div>
                             <div>
-                                <h3 className="text-green-400 font-bold text-sm">GRN Created - GRN-MNM-2026-001</h3>
-                                <p className="text-green-300/80 text-xs">Ready for final payment</p>
+                                <h3 className="text-white font-bold text-base mb-1">GRN Created - GRN-MNM-2026-001</h3>
+                                <p className="text-green-300 text-sm">Ready for final payment</p>
                             </div>
                         </div>
                         <button 
                             onClick={onNext} 
-                            className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm font-semibold flex items-center gap-2 transition-all"
+                            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-6 py-3 rounded-lg font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
                         >
-                            Continue <ArrowRight size={14} />
+                            Continue <ArrowRight size={16} />
                         </button>
                     </motion.div>
                 )}
