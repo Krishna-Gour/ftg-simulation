@@ -143,11 +143,11 @@ export const NegotiationScreen: React.FC<NegotiationScreenProps> = ({ onNext }) 
                                 <button
                                     onClick={handleReleasePO}
                                     disabled={flowRunning}
-                                    className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
-                                    style={{ width: '100%' }}
+                                    className="w-full relative group bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 hover:from-green-500 hover:via-emerald-500 hover:to-green-500 disabled:from-slate-700 disabled:via-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-3 transition-all duration-300 shadow-2xl shadow-green-900/50 hover:shadow-green-800/60 hover:scale-[1.03] active:scale-[0.97] border border-green-400/20 hover:border-green-400/40"
                                 >
-                                    <ArrowRight size={16} />
-                                    Release PO
+                                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <ArrowRight size={20} className="relative z-10" />
+                                    <span className="relative z-10">Release PO</span>
                                 </button>
                             </div>
                         </div>

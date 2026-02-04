@@ -15,17 +15,17 @@ const lineItemsData = [
     { name: 'IP Carrier Injection Molding Tool', targetCost: 320, unit: 'L' },
     { name: 'Chute Chanel Vibration', targetCost: 38, unit: 'L' },  // This one will be over budget (40 > 38)
     { name: 'Cockpit Checking Fixture', targetCost: 28, unit: 'L' },
-    { name: 'Laser Scoring Fixture', targetCost: 65, unit: 'L' },  // Updated from 70 to 65
+    { name: 'Laser Scoring Fixture', targetCost: 70, unit: 'L' },  // Updated target to match nominated
 ];
 
 // Vendors with their quotes
 const vendorQuotes = [
     { vendor: 'Tooling Solutions Ltd', quotes: [295, 42, 24, 68] },
     { vendor: 'Precision Tools Inc', quotes: [310, 39, 27, 72] },
-    { vendor: 'AutoParts Manufacturing', quotes: [300, 40, 25, 70] },  // 40 > 38 for item 2, 70 > 65 for item 4
+    { vendor: 'AutoParts Manufacturing', quotes: [300, 40, 25, 70] },  // Only 40 > 38 for item 2 (index 1)
 ];
 
-const finalNominatedCosts = [300, 40, 25, 70];  // indices 1 (40 > 38) and 3 (70 > 65) exceed targets
+const finalNominatedCosts = [300, 40, 25, 70];  // Only index 1 (40 > 38) exceeds target
 
 const formatValue = (val: number, unit: string) => {
     if (val >= 100) return `₹ ${(val / 100).toFixed(1)} Cr`;
@@ -122,7 +122,7 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
                                 </div>
                                 <div className={styles.fieldGroup}>
                                     <label className={styles.label}>Estimated Budget</label>
-                                    <input type="text" className={styles.input} defaultValue="₹ 4.5 Cr" readOnly style={{ background: 'rgba(59, 130, 246, 0.1)', borderColor: 'rgba(59, 130, 246, 0.3)' }} />
+                                    <input type="text" className={styles.input} defaultValue="₹ 4.6 Cr" readOnly style={{ background: 'rgba(59, 130, 246, 0.1)', borderColor: 'rgba(59, 130, 246, 0.3)' }} />
                                 </div>
                                 <div className={styles.fieldGroup}>
                                     <label className={styles.label}>Target Completion</label>

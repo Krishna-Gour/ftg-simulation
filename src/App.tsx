@@ -19,7 +19,7 @@ function App() {
     const currentStep = steps[currentStepIndex];
 
     const handleNext = () => {
-        if (currentStepIndex < steps.length - 1) {
+        if (currentStepIndex < steps.length) {
             setCurrentStepIndex(prev => prev + 1);
         }
     };

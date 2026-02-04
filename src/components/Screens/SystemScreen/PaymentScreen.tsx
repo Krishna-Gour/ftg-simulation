@@ -117,10 +117,11 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({ onNext, stepId }) 
                         ) : (
                             <button
                                 onClick={handleProcess}
-                                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all shadow-xl shadow-green-900/40 hover:shadow-green-800/50 hover:scale-[1.03] active:scale-[0.98]"
+                                className="relative group bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 hover:from-green-500 hover:via-emerald-500 hover:to-green-500 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all duration-300 shadow-2xl shadow-green-900/50 hover:shadow-green-800/60 hover:scale-[1.03] active:scale-[0.97] border border-green-400/20 hover:border-green-400/40"
                             >
-                                <CreditCard size={20} />
-                                Authorize Payment
+                                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <CreditCard size={20} className="relative z-10" />
+                                <span className="relative z-10">Authorize Payment</span>
                             </button>
                         )}
                     </div>
@@ -141,9 +142,11 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({ onNext, stepId }) 
                         </div>
                         <button 
                             onClick={onNext} 
-                            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-6 py-3 rounded-lg font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
+                            className="relative group bg-gradient-to-r from-sky-600 via-blue-600 to-sky-600 hover:from-sky-500 hover:via-blue-500 hover:to-sky-500 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all duration-300 shadow-2xl shadow-sky-900/50 hover:shadow-sky-800/60 hover:scale-[1.03] active:scale-[0.97] border border-sky-400/20 hover:border-sky-400/40"
                         >
-                            Continue <ArrowRight size={16} />
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <span className="relative z-10">Continue</span>
+                            <ArrowRight size={20} className="relative z-10" />
                         </button>
                     </motion.div>
                 )}

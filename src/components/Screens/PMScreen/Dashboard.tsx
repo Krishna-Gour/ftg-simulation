@@ -13,7 +13,7 @@ const lineItems = [
     { name: 'IP Carrier Injection Molding Tool', targetCost: '₹ 3.2 Cr', nominatedCost: '₹ 3 Cr', targetNum: 320, nominatedNum: 300 },
     { name: 'Chute Chanel Vibration', targetCost: '₹ 38 L', nominatedCost: '₹ 40 L', targetNum: 38, nominatedNum: 40 },
     { name: 'Cockpit Checking Fixture', targetCost: '₹ 28 L', nominatedCost: '₹ 25 L', targetNum: 28, nominatedNum: 25 },
-    { name: 'Laser Scoring Fixture', targetCost: '₹ 65 L', nominatedCost: '₹ 70 L', targetNum: 65, nominatedNum: 70 },
+    { name: 'Laser Scoring Fixture', targetCost: '₹ 70 L', nominatedCost: '₹ 70 L', targetNum: 70, nominatedNum: 70 },
 ];
 
 export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
@@ -123,7 +123,7 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                                     <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
                                         <div style={{ flex: 1, padding: '10px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
                                             <div style={{ color: '#94a3b8', fontSize: '8px', textTransform: 'uppercase', marginBottom: '3px' }}>Target</div>
-                                            <div style={{ color: '#60a5fa', fontFamily: 'monospace', fontSize: '14px', fontWeight: 700 }}>₹ 4.51 Cr</div>
+                                            <div style={{ color: '#60a5fa', fontFamily: 'monospace', fontSize: '14px', fontWeight: 700 }}>₹ 4.56 Cr</div>
                                         </div>
                                         <div style={{ flex: 1, padding: '10px', background: 'rgba(34, 197, 94, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
                                             <div style={{ color: '#94a3b8', fontSize: '8px', textTransform: 'uppercase', marginBottom: '3px' }}>Nominated</div>
@@ -131,7 +131,7 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                                         </div>
                                         <div style={{ flex: 1, padding: '10px', background: 'rgba(251, 191, 36, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
                                             <div style={{ color: '#94a3b8', fontSize: '8px', textTransform: 'uppercase', marginBottom: '3px' }}>Savings</div>
-                                            <div style={{ color: '#fbbf24', fontFamily: 'monospace', fontSize: '14px', fontWeight: 700 }}>₹ 16 L</div>
+                                            <div style={{ color: '#fbbf24', fontFamily: 'monospace', fontSize: '14px', fontWeight: 700 }}>₹ 21 L</div>
                                         </div>
                                     </div>
                                     <div style={{ padding: '8px 10px', background: 'rgba(30, 41, 59, 0.5)', borderRadius: '8px', marginBottom: '10px' }}>
@@ -143,11 +143,11 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                                     <button
                                         onClick={handleReleasePR}
                                         disabled={flowRunning}
-                                        className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-green-900/30 hover:shadow-green-800/40 hover:scale-[1.02] active:scale-[0.98]"
-                                        style={{ width: '100%' }}
+                                        className="w-full relative group bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 hover:from-green-500 hover:via-emerald-500 hover:to-green-500 disabled:from-slate-700 disabled:via-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-3 transition-all duration-300 shadow-2xl shadow-green-900/50 hover:shadow-green-800/60 hover:scale-[1.03] active:scale-[0.97] border border-green-400/20 hover:border-green-400/40"
                                     >
-                                        <ArrowRight size={16} />
-                                        Release PR
+                                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        <ArrowRight size={20} className="relative z-10" />
+                                        <span className="relative z-10">Release PR</span>
                                     </button>
                                 </div>
                             </div>
