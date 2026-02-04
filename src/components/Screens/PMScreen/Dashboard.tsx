@@ -10,10 +10,10 @@ interface PMScreenProps {
 }
 
 const lineItems = [
-    { name: 'IP Carrier Injection Molding Tool', targetCost: '₹ 3.2 Cr', nominatedCost: '₹ 3 Cr' },
-    { name: 'Chute Chanel Vibration', targetCost: '₹ 38 L', nominatedCost: '₹ 40 L' },
-    { name: 'Cockpit Checking Fixture', targetCost: '₹ 28 L', nominatedCost: '₹ 25 L' },
-    { name: 'Laser Scoring Fixture', targetCost: '₹ 65 L', nominatedCost: '₹ 70 L' },
+    { name: 'IP Carrier Injection Molding Tool', targetCost: '₹ 3.2 Cr', nominatedCost: '₹ 3 Cr', targetNum: 320, nominatedNum: 300 },
+    { name: 'Chute Chanel Vibration', targetCost: '₹ 38 L', nominatedCost: '₹ 40 L', targetNum: 38, nominatedNum: 40 },
+    { name: 'Cockpit Checking Fixture', targetCost: '₹ 28 L', nominatedCost: '₹ 25 L', targetNum: 28, nominatedNum: 25 },
+    { name: 'Laser Scoring Fixture', targetCost: '₹ 65 L', nominatedCost: '₹ 70 L', targetNum: 65, nominatedNum: 70 },
 ];
 
 export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
@@ -96,29 +96,33 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                                 <h3 className={styles.panelTitle}>Line Items</h3>
                             </div>
                             <div className={styles.panelBody}>
-                                <div className="bg-slate-900/60 rounded-lg border border-slate-700 overflow-hidden">
-                                    <table className="w-full text-sm">
-                                        <thead className="bg-slate-800/80 text-slate-400 text-xs uppercase font-semibold">
-                                            <tr>
-                                                <th className="p-2 text-left text-[9px]">Item</th>
-                                                <th className="p-2 text-right text-[9px]">Target</th>
-                                                <th className="p-2 text-right text-[9px]">Nominated</th>
-                                                <th className="p-2 text-center text-[9px]">✓</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-slate-700/50 text-slate-300">
-                                            {lineItems.map((item, idx) => (
-                                                <tr key={idx} className="hover:bg-slate-800/30">
-                                                    <td className="p-2 text-white text-[10px]">{item.name}</td>
-                                                    <td className="p-2 text-right font-mono text-slate-400 text-[10px]">{item.targetCost}</td>
-                                                    <td className="p-2 text-right font-mono text-green-400 text-[10px]">{item.nominatedCost}</td>
-                                                    <td className="p-2 text-center">
-                                                        <CheckCircle size={12} className="text-green-400 inline" />
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                <div className="bg-slate-900/60 rounded-lg border border-slate-700 overflow-hidden p-1">
+                                    {/* Compact header */}
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 90px 90px 56px', gap: 8, padding: '8px 12px', fontSize: 10, color: '#94a3b8', textTransform: 'uppercase' }}>
+                                        <div>Item</div>
+                                        <div style={{ textAlign: 'right' }}>Target</div>
+                                        <div style={{ textAlign: 'right' }}>Nominated</div>
+                                        <div style={{ textAlign: 'center' }}>Status</div>
+                                    </div>
+
+                                    <div>
+                                        {lineItems.map((item, idx) => {
+                                            const over = item.nominatedNum > item.targetNum;
+                                            return (
+                                                <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 90px 90px 56px', gap: 8, padding: '8px 12px', alignItems: 'center', borderTop: idx === 0 ? 'none' : '1px solid rgba(255,255,255,0.04)' }}>
+                                                    <div>
+                                                        <div style={{ fontSize: 12, color: '#e2e8f0', fontWeight: 600 }}>{item.name}</div>
+                                                        <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2 }}>Capital Equipment</div>
+                                                    </div>
+                                                    <div style={{ textAlign: 'right', fontFamily: 'monospace', color: '#60a5fa', fontWeight: 700 }}>{item.targetCost}</div>
+                                                    <div style={{ textAlign: 'right', fontFamily: 'monospace', color: over ? '#fb7185' : '#4ade80', fontWeight: 700 }}>{item.nominatedCost}</div>
+                                                    <div style={{ textAlign: 'center' }}>
+                                                        {over ? <span style={{ color: '#fb7185', fontSize: 12, fontWeight: 700 }}>!</span> : <CheckCircle size={14} className="text-green-400" />}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
