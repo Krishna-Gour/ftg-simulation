@@ -87,6 +87,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
     padding: 12px 16px;
     border-radius: 8px;
@@ -99,8 +100,15 @@
 }
 
 .navItemActive {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(59, 130, 246, 0.15);
     color: white;
+    border-left: 3px solid #3b82f6;
+    padding-left: 13px;
+}
+
+.navItemCompleted {
+    color: #4ade80;
+    /* green-400 */
 }
 
 .navItemInactive {

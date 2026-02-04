@@ -111,7 +111,7 @@ export const NegotiationScreen: React.FC<NegotiationScreenProps> = ({ onNext }) 
     }
 
     return (
-        <ScreenLayout role="System" title="PO Release">
+        <ScreenLayout role="System" title="PO Release" currentStep={5}>
             <div className={dashboardStyles.stack} style={{ maxWidth: '100%', margin: '0 auto', gap: '8px' }}>
                 <ProjectStatusTimeline currentStepId={5} />
 

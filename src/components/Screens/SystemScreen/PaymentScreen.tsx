@@ -34,7 +34,7 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({ onNext, stepId }) 
     const statusUpdate = isStagePayment ? "Stage Payment Completed - Awaiting Delivery" : "Project Financial Closure - PO Closed";
 
     return (
-        <ScreenLayout role="System" title={isStagePayment ? "Stage Payment" : "Final Payment"}>
+        <ScreenLayout role="System" title={isStagePayment ? "Stage Payment" : "Final Payment"} currentStep={isStagePayment ? 6 : 8}>
             <div className={dashboardStyles.stack} style={{ maxWidth: '100%', margin: '0 auto', gap: '8px' }}>
                 <ProjectStatusTimeline currentStepId={isStagePayment ? 6 : 8} />
 

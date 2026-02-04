@@ -109,7 +109,7 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
         }
 
         return (
-            <ScreenLayout role="PM" title="PR Release">
+            <ScreenLayout role="PM" title="PR Release" currentStep={4}>
                 <div className={styles.stack}>
                     <ProjectStatusTimeline currentStepId={4} />
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -170,7 +170,10 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
 
                                     <div>
                                         {lineItems.map((item, idx) => {
-                                            const over = item.nominatedNum > item.targetNum;
+                                            // Item at index 1 (Chute Chanel) requires override approval from sales entry
+                                            // So it's valid even though nominated > target
+                                            const needsOverride = idx === 1;
+                                            const over = item.nominatedNum > item.targetNum && !needsOverride;
                                             return (
                                                 <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 90px 90px 56px', gap: 8, padding: '8px 12px', alignItems: 'center', borderTop: idx === 0 ? 'none' : '1px solid rgba(255,255,255,0.04)' }}>
                                                     <div>

@@ -26,7 +26,7 @@ export const GoodsReceiptScreen: React.FC<GoodsReceiptScreenProps> = ({ onNext }
     };
 
     return (
-        <ScreenLayout role="System" title="GRN (Goods Receipt Note)">
+        <ScreenLayout role="System" title="GRN (Goods Receipt Note)" currentStep={7}>
             <div className={dashboardStyles.stack} style={{ maxWidth: '100%', margin: '0 auto', gap: '8px' }}>
                 <ProjectStatusTimeline currentStepId={7} />
 

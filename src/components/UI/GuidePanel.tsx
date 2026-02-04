@@ -1,13 +1,49 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Step } from '../../data/steps';
-import { Info, User, Activity, ArrowRight, FileText } from 'lucide-react';
+import { Info, Activity, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface GuidePanelProps {
     step: Step;
 }
 
+// Real-life process descriptions for each step
+const getStepLog = (stepId: number): string => {
+    switch (stepId) {
+        case 1: return "Customer submits project nomination with estimated budget ₹4.6Cr, project code MNM-2026-INT for Interior Trims (Cockpit, Door Trims, Floor Console). Target completion Q2 2026.";
+        case 2: return "Business Development team receives target costs and feed in Sales Master Data: IP Carrier ₹3.2Cr, Chute Chanel ₹38L, Cockpit Fixture ₹28L, Laser Scoring ₹70L. Total target: ₹4.56Cr.";
+        case 3: return "Purchase Team negotiates with vendor Tooling Solutions Ltd. Final nominated costs: IP Carrier ₹3Cr, Chute Chanel ₹40L (requires override), Cockpit Fixture ₹25L, Laser Scoring ₹70L. Total: ₹4.35Cr, saving ₹21L.";
+        case 4: return "Program Team reviews the purchase nomination and releases Purchase Requisition PR-MNM-2026-001. Email sent to Plant Head for approval. Plant Head approved. PR approved and released to procurement system.";
+        case 5: return "SAP System automatically generates Purchase Order PO-MNM-2026-001 based on approved PR. System validates vendor details, payment terms (Z001), and line items. PO sent to Plant Head for final approval. PO released to vendor Tooling Solutions Ltd.";
+        case 6: return "Automated Stage Payment Entry (20% advance) of ₹87L processed via RTGS to vendor's ICICI Bank account. Payment authorized by finance team. Transaction reference generated. Payment confirmation sent to vendor.";
+        case 7: return "Vendor delivers all 4 items: IP Carrier Tool, Chute Chanel Vibration, Cockpit Fixture, and Laser Scoring Fixture. Quality team verifies items against PO. Goods Receipt Note GRN-MNM-2026-001 created in SAP. Material received confirmation sent to all stakeholders.";
+        case 8: return "Automated Final Payment Entry (80% on GRN) of ₹3.48Cr processed. Invoice verified against GRN. Payment authorized and processed via RTGS. Project financial closure completed. PO status updated to 'Closed'. Vendor payment completed successfully.";
+        default: return "Process step in progress...";
+    }
+};
+
 export const GuidePanel: React.FC<GuidePanelProps> = ({ step }) => {
+    const currentStepId = step.id;
+    const logEndRef = useRef<HTMLDivElement>(null);
+    
+    // Build log of all completed and current steps
+    const processLog = [];
+    for (let i = 1; i <= Math.min(currentStepId, 8); i++) {
+        processLog.push({
+            id: i,
+            description: getStepLog(i),
+            isActive: i === currentStepId,
+            timestamp: `Step ${i}`
+        });
+    }
+
+    // Auto-scroll to the latest log entry when step changes
+    useEffect(() => {
+        if (logEndRef.current) {
+            logEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+    }, [currentStepId]);
+
     return (
         <div className="h-full bg-slate-900/60 backdrop-blur-md border-l border-white/10 p-6 flex flex-col rounded-xl border border-slate-700/50 shadow-2xl">
             <div className="mb-6 flex items-center gap-2 text-sky-400">
@@ -15,70 +51,56 @@ export const GuidePanel: React.FC<GuidePanelProps> = ({ step }) => {
                 <span className="font-bold tracking-wider uppercase text-sm">Simulation Guide</span>
             </div>
 
-            <div className="flex-1 space-y-8 overflow-y-auto pr-2 custom-scrollbar">
-                {/* Context Card */}
-                <div className="space-y-3">
-                    <h3 className="text-white font-semibold flex items-center gap-2">
-                        <User size={16} className="text-purple-400" />
-                        Current Role
-                    </h3>
-                    <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-200 text-sm">
-                        <p className="font-medium">
-                            {step.actor === 'BD' ? 'Business Development Manager' :
-                                step.actor === 'PM' ? 'Program Manager' :
-                                    step.actor === 'System' ? 'SAP S/4HANA Automation' : 'Customer'}
-                        </p>
-                        <p className="mt-1 text-xs opacity-70">
-                            {step.actor === 'BD' ? 'Responsible for sales & initiating projects.' :
-                                step.actor === 'PM' ? 'Oversees execution & validates financials.' :
-                                    'Automated background processing.'}
-                        </p>
-                    </div>
-                </div>
-
-                {/* Blueprint Insight */}
-                {step.blueprintId && (
-                    <div className="space-y-3">
-                        <h3 className="text-white font-semibold flex items-center gap-2">
-                            <FileText size={16} className="text-blue-400" />
-                            Blueprint Insight
-                        </h3>
-                        <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-200 text-sm">
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="font-bold text-xs uppercase tracking-wider text-blue-300">{step.blueprintTitle}</span>
-                                <span className="text-[10px] bg-blue-500/20 px-2 py-0.5 rounded text-blue-300 border border-blue-500/30">{step.blueprintId}</span>
-                            </div>
-                            <p className="opacity-90 text-xs leading-relaxed">
-                                {step.blueprintDesc}
-                            </p>
-                        </div>
-                    </div>
-                )}
-
-                {/* Action Card */}
+            <div className="flex-1 space-y-4 overflow-y-auto pr-2 custom-scrollbar">
+                {/* Process Log */}
                 <div className="space-y-3">
                     <h3 className="text-white font-semibold flex items-center gap-2">
                         <Activity size={16} className="text-green-400" />
-                        What is happening?
+                        Process Log
                     </h3>
-                    <motion.div
-                        key={step.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-slate-300 text-sm leading-relaxed"
-                    >
-                        {step.description}
-                    </motion.div>
-                </div>
-
-                {/* Instruction */}
-                <div className="space-y-3">
-                    <h3 className="text-white font-semibold flex items-center gap-2">
-                        <ArrowRight size={16} className="text-yellow-400" />
-                        Your Task
-                    </h3>
-                    <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-100 text-sm">
-                        {getInstruction(step.actor, step.id)}
+                    
+                    <div className="space-y-3">
+                        {processLog.map((logEntry, idx) => (
+                            <motion.div
+                                key={logEntry.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                className={`p-3 rounded-lg border ${
+                                    logEntry.isActive 
+                                        ? 'bg-sky-500/10 border-sky-500/30' 
+                                        : 'bg-slate-800/40 border-slate-700/50'
+                                }`}
+                            >
+                                <div className="flex items-start gap-3">
+                                    <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
+                                        logEntry.isActive 
+                                            ? 'bg-sky-500/20' 
+                                            : 'bg-green-500/20'
+                                    }`}>
+                                        {logEntry.isActive ? (
+                                            <div className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></div>
+                                        ) : (
+                                            <CheckCircle size={14} className="text-green-400" />
+                                        )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className={`text-xs font-semibold mb-1 ${
+                                            logEntry.isActive ? 'text-sky-400' : 'text-green-400'
+                                        }`}>
+                                            {logEntry.timestamp} {logEntry.isActive && '• In Progress'}
+                                        </div>
+                                        <p className={`text-xs leading-relaxed ${
+                                            logEntry.isActive ? 'text-slate-200' : 'text-slate-400'
+                                        }`}>
+                                            {logEntry.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                        {/* Invisible element at the end for scrolling */}
+                        <div ref={logEndRef} />
                     </div>
                 </div>
             </div>
@@ -89,39 +111,22 @@ export const GuidePanel: React.FC<GuidePanelProps> = ({ step }) => {
                 <div className="grid grid-cols-2 gap-4 text-xs">
                     <div>
                         <span className="block text-slate-500">Project</span>
-                        <span className="text-white font-medium">Project Raptor</span>
+                        <span className="text-white font-medium">Project MnM</span>
                     </div>
                     <div>
-                        <span className="block text-slate-500">PO Number</span>
-                        <span className="text-mono text-sky-400 font-medium">PO-AUTO-9921</span>
+                        <span className="block text-slate-500">PR Number</span>
+                        <span className="text-mono text-sky-400 font-medium">PR-MNM-2026-001</span>
                     </div>
                     <div>
                         <span className="block text-slate-500">OEM Customer</span>
-                        <span className="text-white font-medium">Mahindra Auto</span>
+                        <span className="text-white font-medium">Mahindra & Mahindra</span>
                     </div>
                     <div>
                         <span className="block text-slate-500">Value</span>
-                        <span className="text-green-400 font-medium">₹ 2,00,00,000</span>
+                        <span className="text-green-400 font-medium">₹ 4.35 Cr</span>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
-function getInstruction(actor: string, id: number): string {
-    if (actor === 'System') return "Watch as the System executes the transaction logic automatically.";
-
-    switch (id) {
-        case 1: return "Enter the Project Revenue details received from the OEM.";
-        case 2: return "Define the Budget WBS and Milestones.";
-        case 3: return "Select the correct Purchasing Org (POrg 2000) allowed for this Plant.";
-        case 4: return "Generate the Purchase Requisition (PR) for the identified materials.";
-        case 6: return "Validate the PO Price against the PR Estimate. Click 'Override' if within tolerance.";
-        case 7: return "Review Payment Terms (Select Z001) and Release the PO to the Vendor.";
-        case 11: return "Verify the Tooling Milestone completion to unlock the next payment tranche.";
-        case 13: return "Confirm the Goods Receipt (GRN) to authorize the Final Settlement.";
-        case 15: return "Review the Final P&L Statement to close the project.";
-        default: return "Review the action items on the dashboard to proceed.";
-    }
-}

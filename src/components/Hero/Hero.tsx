@@ -21,12 +21,8 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
                 </span>
 
                 <h1 className={styles.title}>
-                    Sales to Payment Flow
+                    FTG Commercial Lifecycle
                 </h1>
-
-                <p className={styles.subtitle}>
-                    Explore the end-to-end flow from Sales Entry to Final Payment for Project MnM: Interior Trims. Experience seamless integration between Business Development, Program Management, and Automated System workflows.
-                </p>
 
                 <motion.button
                     whileHover={{ scale: 1.05 }}

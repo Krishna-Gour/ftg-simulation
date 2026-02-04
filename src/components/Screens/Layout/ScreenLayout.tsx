@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LayoutGrid, FileText, Settings, Bell, Search, UserCircle } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Actor } from '../../../data/steps';
 import styles from './ScreenLayout.module.css';
 
@@ -8,35 +8,34 @@ interface ScreenLayoutProps {
     role: Actor;
     title: string;
     children: React.ReactNode;
+    currentStep?: number;
 }
 
-export const ScreenLayout: React.FC<ScreenLayoutProps> = ({ role, title, children }) => {
-    const getSidebarClass = () => {
-        switch (role) {
-            case 'BD': return styles.sidebarBD;
-            case 'PM': return styles.sidebarPM;
-            case 'System': return styles.sidebarSystem;
-            default: return '';
-        }
-    };
+export const ScreenLayout: React.FC<ScreenLayoutProps> = ({ role: _role, title, children }) => {
 
     return (
         <div className={styles.container}>
-            {/* Sidebar */}
-            <div className={`${styles.sidebar} ${getSidebarClass()}`}>
+            {/* Sidebar - Hidden */}
+            {/* <div className={`${styles.sidebar} ${getSidebarClass()}`}>
                 <div className={styles.sidebarHeader}>
                     <div className={styles.logoArea}>
                         <div className={styles.logoBox}>
                             <LayoutGrid size={18} />
                         </div>
-                        <span className={styles.appName}>FTG Portal</span>
+                        <span className={styles.appName}>FTG Simulation</span>
                     </div>
                 </div>
 
                 <nav className={styles.nav}>
-                    <NavItem icon={<FileText size={18} />} label="Nominations" active={true} />
-                    <NavItem icon={<Bell size={18} />} label="Notifications" />
-                    <NavItem icon={<Settings size={18} />} label="Settings" />
+                    {navSteps.map((step) => (
+                        <NavItem 
+                            key={step.id}
+                            icon={step.icon} 
+                            label={step.label} 
+                            active={step.id === currentStep}
+                            completed={step.id < currentStep}
+                        />
+                    ))}
                 </nav>
 
                 <div className={styles.profile}>
@@ -44,11 +43,11 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = ({ role, title, childre
                         <UserCircle size={32} className="text-white/60" />
                         <div className={styles.profileInfo}>
                             <span className={styles.roleLabel}>Current Role</span>
-                            <span className={styles.roleName}>{role === 'BD' ? 'Business Dev.' : role === 'PM' ? 'Program Mgr.' : 'SAP System'}</span>
+                            <span className={styles.roleName}>{role === 'BD' ? 'Business Dev.' : role === 'PM' ? 'Program Mgr.' : role === 'Customer' ? 'Customer' : 'SAP System'}</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Main Content */}
             <div className={styles.main}>
@@ -84,10 +83,3 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = ({ role, title, childre
         </div>
     );
 };
-
-const NavItem = ({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) => (
-    <button className={`${styles.navItem} ${active ? styles.navItemActive : styles.navItemInactive}`}>
-        {icon}
-        {label}
-    </button>
-);

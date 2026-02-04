@@ -105,7 +105,7 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
     // Step 1: Nomination (Customer project nomination)
     if (stepId === 1) {
         return (
-            <ScreenLayout role="Customer" title="Nomination">
+            <ScreenLayout role="Customer" title="Nomination" currentStep={1}>
                 <ProjectStatusTimeline currentStepId={1} />
                 <div className={styles.container}>
                     <div className={styles.card}>
@@ -154,7 +154,7 @@ export const BDScreen: React.FC<BDScreenProps> = ({ onNext, stepId }) => {
     // Step 2: Sales Master Data - Target (with inline Purchase Nomination)
     if (stepId === 2) {
         return (
-            <ScreenLayout role="BD" title="Sales Master Data - Target & Purchase Nomination">
+            <ScreenLayout role="BD" title="Sales Master Data - Target & Purchase Nomination" currentStep={negotiationPhase === 'complete' ? 3 : 2}>
                 <ProjectStatusTimeline currentStepId={negotiationPhase === 'complete' ? 3 : 2} />
                 <div className={styles.container} style={{ maxWidth: '1200px' }}>
                     <div className={styles.card} style={{ width: '100%' }}>

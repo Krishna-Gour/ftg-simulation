@@ -11,10 +11,12 @@ import { ProjectSummary } from './components/Screens/SummaryScreen/ProjectSummar
 import { NegotiationScreen } from './components/Screens/SystemScreen/NegotiationScreen';
 import { GoodsReceiptScreen } from './components/Screens/SystemScreen/GoodsReceiptScreen';
 import { PaymentScreen } from './components/Screens/SystemScreen/PaymentScreen';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function App() {
     const [started, setStarted] = useState(false);
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
 
     const currentStep = steps[currentStepIndex];
 
@@ -89,23 +91,6 @@ function App() {
                 <div className="h-full w-full flex flex-col md:flex-row p-4 gap-4 relative z-10">
                     {/* Left/Top: Simulation Area */}
                     <div className="flex-1 flex flex-col h-full min-h-0">
-                        {/* Progress Header - Compact (hide on summary screen) */}
-                        {currentStepIndex < steps.length && (
-                            <div className="mb-4 flex items-center justify-between px-4">
-                                <div>
-                                    <h2 className="text-xs font-semibold text-sky-400 tracking-wider uppercase">Step {currentStepIndex + 1} / {steps.length}</h2>
-                                    <h1 className="text-xl font-bold text-white leading-tight">{currentStep?.title}</h1>
-                                </div>
-                                <div className="w-1/3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                    <motion.div
-                                        className="h-full bg-sky-500"
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
-                                    />
-                                </div>
-                            </div>
-                        )}
-
                         {/* Active Screen Area - Flex Grow to fill space */}
                         <div className="flex-1 min-h-0 relative">
                             <AnimatePresence mode="wait">
@@ -125,9 +110,36 @@ function App() {
 
                     {/* Right/Bottom: Guide Panel (Fixed width on desktop) - Hide on summary screen */}
                     {currentStepIndex < steps.length && (
-                        <div className="w-full md:w-80 lg:w-96 flex-shrink-0 h-full">
-                            <GuidePanel step={currentStep} />
-                        </div>
+                        <motion.div 
+                            className="relative flex-shrink-0 h-full"
+                            animate={{ 
+                                width: isPanelCollapsed ? '48px' : 'auto'
+                            }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            {/* Toggle Button */}
+                            <button
+                                onClick={() => setIsPanelCollapsed(!isPanelCollapsed)}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-full p-2 shadow-xl transition-all duration-200 hover:scale-110"
+                                title={isPanelCollapsed ? "Expand Guide Panel" : "Collapse Guide Panel"}
+                            >
+                                {isPanelCollapsed ? <ChevronLeft size={20} className="text-sky-400" /> : <ChevronRight size={20} className="text-sky-400" />}
+                            </button>
+
+                            {/* Guide Panel */}
+                            <motion.div 
+                                className="h-full overflow-hidden"
+                                animate={{ 
+                                    opacity: isPanelCollapsed ? 0 : 1,
+                                    width: isPanelCollapsed ? 0 : 'auto'
+                                }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="w-80 lg:w-96 h-full">
+                                    <GuidePanel step={currentStep} />
+                                </div>
+                            </motion.div>
+                        </motion.div>
                     )}
                 </div>
             )}
