@@ -18,12 +18,32 @@ const lineItems = [
 
 export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
     const [approvalState, setApprovalState] = useState<'draft' | 'approved'>('draft');
+    const [flowStep, setFlowStep] = useState<number>(0); // 0=idle,1=email sent,2=plant head approved,3=pr approved
+    const [flowRunning, setFlowRunning] = useState(false);
+    const timersRef = React.useRef<number[]>([]);
 
     if (stepId === 4) {
         const handleReleasePR = () => {
-            setApprovalState('approved');
-            setTimeout(onNext, 2000);
+            // start compact approval flow on same screen
+            setFlowRunning(true);
+            setFlowStep(1); // email sent
+            // email sent -> plant head approves -> PR approved -> proceed
+            timersRef.current.push(window.setTimeout(() => setFlowStep(2), 900));
+            timersRef.current.push(window.setTimeout(() => setFlowStep(3), 2200));
+            timersRef.current.push(window.setTimeout(() => {
+                setApprovalState('approved');
+                setFlowRunning(false);
+                setTimeout(onNext, 900);
+            }, 3000));
         };
+
+        React.useEffect(() => {
+            return () => {
+                // cleanup timers
+                timersRef.current.forEach(t => clearTimeout(t));
+                timersRef.current = [];
+            };
+        }, []);
 
         if (approvalState !== 'draft') {
             return (
@@ -32,16 +52,45 @@ export const PMScreen: React.FC<PMScreenProps> = ({ onNext, stepId }) => {
                         <ProjectStatusTimeline currentStepId={4} />
                         <div className={styles.panel}>
                             <div className={styles.panelBody}>
-                                <div className="flex flex-col items-center justify-center py-12 text-center">
-                                    {approvalState === 'approved' && (
-                                        <div>
-                                            <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 mx-auto text-green-400">
-                                                <CheckCircle size={32} />
-                                            </div>
-                                            <h3 className="text-xl font-bold text-white mb-2">PR Approved & Released!</h3>
-                                            <p className="text-green-300">Proceeding to PO Release...</p>
+                                {/* Compact approval flow - all steps on one screen */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 560, margin: '0 auto', padding: '8px 0' }}>
+                                    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                        <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(34,197,94,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <CheckCircle size={20} className="text-green-400" />
                                         </div>
-                                    )}
+                                        <div>
+                                            <div style={{ color: '#fff', fontWeight: 700 }}>PR Submitted</div>
+                                            <div style={{ color: '#94a3b8', fontSize: 12 }}>PR-MNM-2026-001 sent to approver</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Steps */}
+                                    <div style={{ display: 'grid', gap: 6 }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <div style={{ width: 14 }}>
+                                                {flowStep > 0 ? <CheckCircle size={14} className="text-green-400" /> : flowRunning ? <div className="h-3 w-3 rounded-full bg-sky-400 animate-pulse" /> : <div className="h-3 w-3 rounded-full bg-slate-600" />}
+                                            </div>
+                                            <div style={{ color: flowStep > 0 ? '#fff' : '#94a3b8', fontSize: 13 }}>Email sent to Plant Head</div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <div style={{ width: 14 }}>
+                                                {flowStep > 1 ? <CheckCircle size={14} className="text-green-400" /> : flowStep === 1 ? <div className="h-3 w-3 rounded-full bg-amber-400 animate-pulse" /> : <div className="h-3 w-3 rounded-full bg-slate-600" />}
+                                            </div>
+                                            <div style={{ color: flowStep > 1 ? '#fff' : '#94a3b8', fontSize: 13 }}>Plant Head approved</div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <div style={{ width: 14 }}>
+                                                {flowStep > 2 ? <CheckCircle size={14} className="text-green-400" /> : flowStep === 2 ? <div className="h-3 w-3 rounded-full bg-amber-400 animate-pulse" /> : <div className="h-3 w-3 rounded-full bg-slate-600" />}
+                                            </div>
+                                            <div style={{ color: flowStep > 2 ? '#fff' : '#94a3b8', fontSize: 13 }}>PR Approved & Released</div>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ textAlign: 'right', marginTop: 6 }}>
+                                        <div style={{ color: '#94a3b8', fontSize: 12 }}>{approvalState === 'approved' ? 'Proceeding to PO Release...' : 'Processing approval...'}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
